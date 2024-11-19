@@ -1,18 +1,22 @@
+//importing meme data from the source
 import memesData from "../src/MemesData.jsx"
-
+import React from "react"
+//Creating the meme function which generates the meme output
 export default function Meme() {
-    let url
+    //State to store the meme data
+    const [memeImage, setMemeImage] = React.useState("")
 
+// getMemem image function gets the image from the Data aray using random()
     function getMemeImage() {
         const memesArray = memesData.data.memes
         const randomIndex = Math.floor(Math.random() * memesArray.length)
-        url = memesArray[randomIndex].url
-        console.log(url)
+        setMemeImage(memesArray[randomIndex].url)
 
     }
     return (
+    //Main component that contains the form
         <main>
-            <form className="form">
+            <div className="form">
                 <div>
                     <label > Top Text
                         <input 
@@ -40,7 +44,9 @@ export default function Meme() {
                 >
                     Get a new meme image
                 </button>
-            </form>
+            </div>
+            {/* Displaying the generated meme image */}
+            <img src={memeImage} className="meme-image"/>
         </main>
     )
 }
