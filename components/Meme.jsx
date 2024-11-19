@@ -4,13 +4,23 @@ import React from "react"
 //Creating the meme function which generates the meme output
 export default function Meme() {
     //State to store the meme data
-    const [memeImage, setMemeImage] = React.useState("https://i.imgflip.com/1bij.jpg")
+    const [meme, setMeme] = React.useState({
+        topText: "You have made:",
+        bottomText: "Zero Memes",
+        randomImage: "http://i.imgflip.com/1bij.jpg"
+    })
+    //State to store the meme image
+    const [allMemes, setAllMemes] = React.useState(memesData)
 
 // getMemem image function gets the image from the Data aray using random()
     function getMemeImage() {
-        const memesArray = memesData.data.memes
+        const memesArray = allMemes.data.memes
         const randomIndex = Math.floor(Math.random() * memesArray.length)
-        setMemeImage(memesArray[randomIndex].url)
+        const url = memesArray[randomIndex].url
+        setMeme(prevMeme => ({
+            ...prevMeme,
+            randomImage: url
+        }))
 
     }
     return (
@@ -46,7 +56,7 @@ export default function Meme() {
                 </button>
             </div>
             {/* Displaying the generated meme image */}
-            <img src={memeImage} className="meme-image"/>
+            <img src={meme.randomImage} className="meme-image"/>
         </main>
     )
 }
