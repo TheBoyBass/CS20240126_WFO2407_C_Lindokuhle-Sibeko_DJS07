@@ -1,29 +1,36 @@
 //importing meme data from the source
-import memesData from "../src/MemesData.jsx"
+
 import React from "react"
 //Creating the meme function which generates the meme output
 export default function Meme() {
     //State to store the meme data
     const [meme, setMeme] = React.useState({
-        topText: "You have made:",
-        bottomText: "Zero Memes",
+        topText: "",
+        bottomText: "",
         randomImage: "http://i.imgflip.com/1bij.jpg"
     })
     //State to store the meme image
-    const [allMemes, setAllMemes] = React.useState(memesData)
+    const [allMemes, setAllMemes] = React.useState([])
 
-// getMemem image function gets the image from the Data aray using random()
+    // Function to fetch meme data from the server
+    React.useEffect(() => {
+        fetch('https://api.imgflip.com/get_memes')
+        .then(response => response.json())
+        .then(data => setAllMemes(data.data.memes))
+        .catch(error => console.log('Error:', error))
+        }, [])
+
+    // getMemem image function gets the image from the Data aray using random()
     function getMemeImage() {
-        const memesArray = allMemes.data.memes
-        const randomIndex = Math.floor(Math.random() * memesArray.length)
-        const url = memesArray[randomIndex].url
+        const randomIndex = Math.floor(Math.random() * allMemes.length)
+        const url = allMemes[randomIndex].url
         setMeme(prevMeme => ({
             ...prevMeme,
             randomImage: url
         }))
 
     }
-// function to generate the text from the inputs and outputs on the image
+    // function to generate the text from the inputs and outputs on the image
     function handleChanges(event) {
         const { name, value } = event.target
         setMeme(prevMeme => ({
