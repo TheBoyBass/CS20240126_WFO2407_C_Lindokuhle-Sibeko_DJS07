@@ -23,6 +23,15 @@ export default function Meme() {
         }))
 
     }
+// function to generate the text from the inputs and outputs on the image
+    function handleChanges(event) {
+        const { name, value } = event.target
+        setMeme(prevMeme => ({
+           ...prevMeme,
+            [name]: value
+        }))
+    }
+    //Rendering the meme component
     return (
     //Main component that contains the form
         <main>
@@ -33,6 +42,9 @@ export default function Meme() {
                             type="text" 
                             placeholder="Enter your top caption" 
                             className="form--input"
+                            name="topText"
+                            value={meme.topText}
+                            onChange={handleChanges}
                         />
                     </label>
                 </div>
@@ -43,6 +55,9 @@ export default function Meme() {
                             type="text" 
                             placeholder="Enter your bottom caption" 
                             className="form--input"
+                            name="bottomText"
+                            value={meme.bottomText}
+                            onChange={handleChanges}
                         />
                     </label>
                 </div>
@@ -55,8 +70,12 @@ export default function Meme() {
                     Get a new meme image
                 </button>
             </div>
-            {/* Displaying the generated meme image */}
-            <img src={meme.randomImage} className="meme-image"/>
+            <div className="meme">
+                {/* Displaying the generated meme image */}
+                <img src={meme.randomImage} className="meme--image"/>
+                <h2 className="meme--text top">{meme.topText}</h2>
+                <h2 className="meme--text bottom">{meme.bottomText}</h2>
+            </div>
         </main>
     )
 }
