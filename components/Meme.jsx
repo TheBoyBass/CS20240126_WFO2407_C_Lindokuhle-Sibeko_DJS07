@@ -4,7 +4,7 @@ import React from "react"
 //Creating the meme function which generates the meme output
 export default function Meme() {
     //State to store the meme data
-    const [memeImage, setMemeImage] = React.useState("")
+    const [memeImage, setMemeImage] = React.useState("https://i.imgflip.com/1bij.jpg")
 
 // getMemem image function gets the image from the Data aray using random()
     function getMemeImage() {
